@@ -65,13 +65,13 @@
                                 <form th:action = "@{/patients/save}" th:object="${addPatient}" method="post">
                                     <div class="form-group mb-3">
                                         <label class="form-label">First Name</label>
-                                        <input th:field="*{first_name}" type="text" class="form-control" name="first_name" id="first_name" placedholder="Enter First Name" required/>
+                                        <input th:field="*{first_name}" type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter First Name" required/>
                                         <p th:errors = "*{first_name}" class="text-danger"
                                         th:if="${#fields.hasErrors('first_name')}"></p>
                                     </div>
                                     <div class="form-group mb-3">
                                         <label class="form-label">Last Name</label>
-                                        <input th:field="*{last_name}" type="text" class="form-control" name="last_name" id="last_name" placedholder="Enter Last Name" required/>
+                                        <input th:field="*{last_name}" type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter Last Name" required/>
                                         <p th:errors = "*{last_name}" class="text-danger"
                                         th:if="${#fields.hasErrors('last_name')}"></p>
                                     </div>
@@ -94,19 +94,19 @@
                                     </div>
                                     <div class="form-group mb-3">
                                         <label class="form-label">Phone Number</label>
-                                        <input th:field="*{phone}" type="tel" pattern="^(09|\+639)\d{9}$" class="form-control" name="phone" id="phone" required/>
+                                        <input th:field="*{phone}" type="tel" pattern="^(09|\+639)\d{9}$" class="form-control" name="phone" id="phone" placeholder="+63-xxxxxxxxxx/09xxxxxxxxxx"/>
                                         <p th:errors = "*{birth_date}" class="text-danger"
                                         th:if="${#fields.hasErrors('phone')}"></p>
                                     </div>
                                     <div class="form-group mb-3">
                                         <label class="form-label">Email Address</label>
-                                        <input th:field="*{email}" type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placedholder="Enter Email" required/>
+                                        <input th:field="*{email}" type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter Email" required/>
                                         <p th:errors = "*{email}" class="text-danger"
                                         th:if="${#fields.hasErrors('email')}"></p>
                                     </div>
                                     <div class="form-group mb-3">
                                         <label class="form-label">Insurance Info</label>
-                                        <input th:field="*{insurance_info}" type="text" class="form-control" name="insurance_info" id="insurance_info" placedholder="Insurance Info" required/>
+                                        <input th:field="*{insurance_info}" type="text" class="form-control" name="insurance_info" id="insurance_info" placeholder="Insurance Info" required/>
                                         <p th:errors = "*{insurance_info}" class="text-danger"
                                         th:if="${#fields.hasErrors('insurance_info')}"></p>
                                     </div>
@@ -166,3 +166,12 @@
             </table>
         </div>
     </body>
+
+<style>
+    .form-group .form-label:after{
+    content:"*";
+    color:red;
+}
+</style>
+
+   
