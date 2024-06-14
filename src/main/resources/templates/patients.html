@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"></html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Healthcare Management System</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+            <a class="navbar-brand" href="#">HMS</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <!-- left -->
+                </ul>
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <!-- right -->
+                    <li class="nav-item">
+                            <span class="nav-link" th:text = "${currentUser.firstName}"></span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-danger" aria-current="page" th:href="@{/logout}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </nav>
+        <div class ="container">
+            <div class="row col-md-10">
+                <h1>Patient List</h1>
+            </div>
+            <div th:if="${param.success}">
+                <div class="alert alert-success">
+                    Successfully added Patient!
+                </div>
+            </div>
+            <div th:if="${param.failure}">
+                <div class="alert alert-danger">
+                    Duplicate Patient!
+                </div>
+            </div>    
+                <!-- Button trigger for add patient modal-->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPatientModal">Add Patient</button>
+
+                <!-- modal for add patient-->
+                 <div class="modal fade" id="addPatientModal" tabindex="-1" role="dialog" aria-labelledby="addPatientModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered d-flex justify-content-center">
+                        <div class="modal-content w-75">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addPatientModal">Add New Patient</h5>
+                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                                </button>
+                            </div>
+
+                            <div class="modal-body p-4">
+                                <form th:action = "@{/patients/save}" th:object="${addPatient}" method="post">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">First Name</label>
+                                        <input th:field="*{first_name}" type="text" class="form-control" name="first_name" id="first_name" placedholder="Enter First Name" required/>
+                                        <p th:errors = "*{first_name}" class="text-danger"
+                                        th:if="${#fields.hasErrors('first_name')}"></p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Last Name</label>
+                                        <input th:field="*{last_name}" type="text" class="form-control" name="last_name" id="last_name" placedholder="Enter Last Name" required/>
+                                        <p th:errors = "*{last_name}" class="text-danger"
+                                        th:if="${#fields.hasErrors('last_name')}"></p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Birth Date</label>
+                                        <input th:field="*{birth_date}" type="date" class="form-control" name="birth_date" id="birth_date" required/>
+                                        <p th:errors = "*{birth_date}" class="text-danger"
+                                        th:if="${#fields.hasErrors('birth_date')}"></p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Sex</label>
+                                        <select th:field="*{sex}" class="form-control" name="sex" id="sex" required>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="others">Others</option>
+                                                <option value="na">Prefer not to Say</option>
+                                        </select>
+                                        <p th:errors = "*{sex}" class="text-danger"
+                                        th:if="${#fields.hasErrors('sex')}"></p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Phone Number</label>
+                                        <input th:field="*{phone}" type="tel" pattern="^(09|\+639)\d{9}$" class="form-control" name="phone" id="phone" required/>
+                                        <p th:errors = "*{birth_date}" class="text-danger"
+                                        th:if="${#fields.hasErrors('phone')}"></p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Email Address</label>
+                                        <input th:field="*{email}" type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placedholder="Enter Email" required/>
+                                        <p th:errors = "*{email}" class="text-danger"
+                                        th:if="${#fields.hasErrors('email')}"></p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Insurance Info</label>
+                                        <input th:field="*{insurance_info}" type="text" class="form-control" name="insurance_info" id="insurance_info" placedholder="Insurance Info" required/>
+                                        <p th:errors = "*{insurance_info}" class="text-danger"
+                                        th:if="${#fields.hasErrors('insurance_info')}"></p>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                
+                                        <button type="submit" id="submit" class="btn btn-primary">Add Patient</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                 </div>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Birth Date</th>
+                        <th>Sex</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Insurance Info</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each = "patient : ${patients}">
+                        <td th:text = "${patient.patient_id}"></td>
+                        <td th:text = "${patient.first_name}"></td>
+                        <td th:text = "${patient.last_name}"></td>
+                        <td th:text = "${patient.birth_date}"></td>
+                        <td th:text = "${patient.sex}"></td>
+                        <td th:text = "${patient.phone}"></td>
+                        <td th:text = "${patient.email}"></td>
+                        <td th:text = "${patient.insurance_info}"></td>
+                        <td>
+                            <!-- Add onclick feature-->
+                            <button className='btn btn-info'>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-file-earmark-check" viewBox="0 0 16 16">
+                                <path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>
+                                <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                            </svg>
+                            </button>
+                            <button  className='btn btn-danger'>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                            </svg>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
