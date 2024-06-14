@@ -1,6 +1,6 @@
 
 # PATIENT 
-##    -Modal for Add Patient(DONE)
+##  <del>  -Modal for Add Patient </del>
 ##    -Modal for Update Patient
 ##    -Delete Patient
 ##    -Add format for phone number in frontend (2 fields)
@@ -9,7 +9,7 @@
 ##   -Create dashboard for all admin controls(users,patients,appointments,doctors,etc)
 
 # GIT
-##    -Create repository in github
+##   <del> -Create repository in github </del>
 
 # APPOINTMENTS
 ##    -Backend for appointments
