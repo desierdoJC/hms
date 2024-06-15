@@ -2,8 +2,8 @@
 # PATIENT 
 ##  <del>  -Modal for Add Patient </del>
 ##    -Modal for Update Patient
-##    -Delete Patient
-##    <del>-Add format for phone number in frontend (2 fields) <del>
+##  <del>-Delete Patient </del>
+##    <del>-Add format for phone number in frontend (2 fields) <del> - limit input by user based on format
 ##    -Add red * for all required fields - Fix linking stylesheets
 
 # ADMIN DASHBOARD
