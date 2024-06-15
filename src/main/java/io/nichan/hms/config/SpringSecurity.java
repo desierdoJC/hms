@@ -3,6 +3,7 @@ package io.nichan.hms.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,7 +33,8 @@ public class SpringSecurity {
             authorize.requestMatchers("/register/**").permitAll()
                 .requestMatchers("/index").permitAll()
                 .requestMatchers("/users").hasRole("ADMIN")
-                .requestMatchers("/patients/**").hasRole("ADMIN"))
+                .requestMatchers("/patients/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN"))
         .formLogin(
             form -> form
                 .loginPage("/login")

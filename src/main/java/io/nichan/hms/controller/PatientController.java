@@ -7,9 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.nichan.hms.dto.PatientDto;
 import io.nichan.hms.dto.UserDto;
@@ -48,5 +51,13 @@ public class PatientController {
         model.addAttribute("addPatient", addPatient);
 
         return "patients";
+    }
+
+    @DeleteMapping("/patients/delete/{id}")
+    @ResponseBody
+    public String deletePatient(@PathVariable("id") Long patientId){
+        patientService.deletePatient(patientId);
+
+        return "redirect:/patients?delete_success";
     }
 }

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import io.nichan.exception.ResourceNotFoundException;
 import io.nichan.hms.dto.PatientDto;
 import io.nichan.hms.entity.Patient;
 import io.nichan.hms.entity.User;
@@ -37,21 +38,21 @@ public class PatientServiceImpl implements PatientService{
     @Override
     public List<PatientDto> findAllPatients() {
         List<Patient> allPatients = patientRepository.findAll();
-        return allPatients.stream().map((patient) -> mapToPatientDto(patient)).collect(Collectors.toList());
+        return allPatients.stream().map((patient) -> PatientMapper.mapToPatientDto(patient)).collect(Collectors.toList());
     }
 
-    private PatientDto mapToPatientDto(Patient patient){
-        PatientDto patientDto = new PatientDto();
-        patientDto.setPatient_id(patient.getPatient_id());
-        patientDto.setFirst_name(patient.getFirst_name());
-        patientDto.setLast_name(patient.getLast_name());
-        patientDto.setBirth_date(patient.getBirth_date());
-        patientDto.setSex(patient.getBirth_date());
-        patientDto.setPhone(patient.getPhone());
-        patientDto.setEmail(patient.getEmail());
-        patientDto.setInsurance_info(patient.getInsurance_info());
-        return patientDto;
+    @Override
+    public PatientDto updatePatient(Long patientId, PatientDto updatedPatient) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updatePatient'");
+    }
 
+    @Override
+    public void deletePatient(Long patientId) {
+        Patient patient = patientRepository.findById(patientId).orElseThrow(
+            () -> new ResourceNotFoundException("Patient does not exist with the given ID:" + patientId)
+        );
+        patientRepository.deleteById(patientId);
     }
 
 }
