@@ -29,7 +29,6 @@ public class PatientServiceImpl implements PatientService{
 
     }
 
-    //Finds a patient entity from db using email
     @Override
     public Patient findPatientByEmail(String email) {
         return patientRepository.findByEmail(email);
@@ -43,8 +42,22 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public PatientDto updatePatient(Long patientId, PatientDto updatedPatient) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updatePatient'");
+        Patient patient = patientRepository.findById(patientId).orElseThrow(
+            () -> new ResourceNotFoundException("Patient does not exist with the given ID:" + patientId)
+        );
+
+        patient.setFirst_name(updatedPatient.getFirst_name());
+        patient.setLast_name(updatedPatient.getLast_name());
+        patient.setBirth_date(updatedPatient.getBirth_date());
+        patient.setSex(updatedPatient.getSex());
+        patient.setPhone(updatedPatient.getPhone());
+        patient.setEmail(updatedPatient.getEmail());
+        patient.setInsurance_info(updatedPatient.getInsurance_info());
+
+        Patient updatedPatientObj = patientRepository.save(patient);
+
+        return PatientMapper.mapToPatientDto(updatedPatientObj);
+
     }
 
     @Override
@@ -53,6 +66,15 @@ public class PatientServiceImpl implements PatientService{
             () -> new ResourceNotFoundException("Patient does not exist with the given ID:" + patientId)
         );
         patientRepository.deleteById(patientId);
+    }
+
+    @Override
+    public PatientDto getPatientById(Long patientId) {
+        Patient patient = patientRepository.findById(patientId).orElseThrow(
+            () -> new ResourceNotFoundException("Patient does not exist with the given ID:" + patientId)
+        );
+
+        return PatientMapper.mapToPatientDto(patient);
     }
 
 }

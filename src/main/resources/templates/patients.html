@@ -63,7 +63,7 @@
                 <!-- Button trigger for add patient modal-->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPatientModal">Add Patient</button>
 
-                <!-- modal for add patient-->
+                <!-- modal for add patient -->
                  <div class="modal fade" id="addPatientModal" tabindex="-1" role="dialog" aria-labelledby="addPatientModal" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered d-flex justify-content-center">
                         <div class="modal-content w-75">
@@ -134,6 +134,77 @@
                     </div>
                  </div>
 
+                 <!-- modal for update patient --> 
+                 <div class="modal fade" id="updatePatientModal" tabindex="-1" role="dialog" aria-labelledby="updatePatientModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered d-flex justify-content-center">
+                        <div class="modal-content w-75">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="updatePatientModal">Update Patient</h5>
+                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                                </button>
+                            </div>
+
+                            <div class="modal-body p-4">
+                                <form id="updatePatientForm" th:action = "@{/patients/update}"  th:object = "${editPatient}" method="post">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">First Name</label>
+                                        <input th:field="*{first_name}" type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter First Name" required/>
+                                        <p th:errors = "*{first_name}" class="text-danger"
+                                        th:if="${#fields.hasErrors('first_name')}"></p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Last Name</label>
+                                        <input th:field="*{last_name}" type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter Last Name" required/>
+                                        <p th:errors = "*{last_name}" class="text-danger"
+                                        th:if="${#fields.hasErrors('last_name')}"></p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Birth Date</label>
+                                        <input th:field="*{birth_date}" type="date" class="form-control" name="birth_date" id="birth_date" required/>
+                                        <p th:errors = "*{birth_date}" class="text-danger"
+                                        th:if="${#fields.hasErrors('birth_date')}"></p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Sex</label>
+                                        <select th:field="*{sex}" class="form-control" name="sex" id="sex" required>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="others">Others</option>
+                                                <option value="na">Prefer not to Say</option>
+                                        </select>
+                                        <p th:errors = "*{sex}" class="text-danger"
+                                        th:if="${#fields.hasErrors('sex')}"></p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Phone Number</label>
+                                        <input th:field="*{phone}" type="tel" pattern="^(09|\+639)\d{9}$" class="form-control" name="phone" id="phone" placeholder="+63-xxxxxxxxxx/09xxxxxxxxxx"/>
+                                        <p th:errors = "*{phone}" class="text-danger"
+                                        th:if="${#fields.hasErrors('phone')}"></p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Email Address</label>
+                                        <input th:field="*{email}" type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter Email" required/>
+                                        <p th:errors = "*{email}" class="text-danger"
+                                        th:if="${#fields.hasErrors('email')}"></p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Insurance Info</label>
+                                        <input th:field="*{insurance_info}" type="text" class="form-control" name="insurance_info" id="insurance_info" placeholder="Insurance Info" required/>
+                                        <p th:errors = "*{insurance_info}" class="text-danger"
+                                        th:if="${#fields.hasErrors('insurance_info')}"></p>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                
+                                        <button type="submit" id="submit" class="btn btn-primary">Update Patient</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                 </div>
+ 
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -159,9 +230,8 @@
                         <td th:text = "${patient.email}"></td>
                         <td th:text = "${patient.insurance_info}"></td>
                         <td>
-                            <!-- Add onclick feature-->
-                             
-                            <button className='btn btn-info'>
+
+                            <button className='btn btn-info' th:onclick="'updatePatient('+ ${patient.patient_id} + ');'">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-file-earmark-check" viewBox="0 0 16 16">
                                 <path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>
                                 <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
@@ -202,6 +272,25 @@
             })
         }
     }
+
+    function updatePatient(patientId){
+        fetch('/patients/' + patientId)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('updatePatientForm').elements['first_name'].value = data.first_name;
+                document.getElementById('updatePatientForm').elements['last_name'].value = data.last_name;
+                document.getElementById('updatePatientForm').elements['birth_date'].value = data.birth_date; 
+                document.getElementById('updatePatientForm').elements['sex'].value = data.sex;
+                document.getElementById('updatePatientForm').elements['phone'].value = data.phone;
+                document.getElementById('updatePatientForm').elements['email'].value = data.email;
+                document.getElementById('updatePatientForm').elements['insurance_info'].value = data.insurance_info;
+
+
+                $('#updatePatientModal').modal('show');
+            })
+            .catch(error => console.error('Error', error));
+        }
+    
 </script>
 
 <style>

@@ -20,6 +20,10 @@ import io.nichan.hms.entity.Patient;
 import io.nichan.hms.service.PatientService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @AllArgsConstructor
 @Controller
@@ -39,16 +43,26 @@ public class PatientController {
         return "redirect:/patients?success";
     }
 
+    //Get Individual Employee
+    @GetMapping("/patients/{id}")
+    @ResponseBody
+    public PatientDto getPatient(@PathVariable("id") Long patientId){
+        PatientDto patientDto = patientService.getPatientById(patientId);
+
+        return patientDto;
+    }
+
     @GetMapping("/patients")
     public String showAllPatients(Model model){
         
-        //Save all Patient details
         List<PatientDto> patients = patientService.findAllPatients();
         model.addAttribute("patients", patients);
 
-        //Store Patient Data into a model
         PatientDto addPatient = new PatientDto();
         model.addAttribute("addPatient", addPatient);
+
+        PatientDto editPatient = new PatientDto();
+        model.addAttribute("editPatient", editPatient);
 
         return "patients";
     }
@@ -59,5 +73,19 @@ public class PatientController {
         patientService.deletePatient(patientId);
 
         return "redirect:/patients?delete_success";
+    }
+
+    @PostMapping("patients/update")
+    public String updatepatient(@ModelAttribute("editPatient") PatientDto patientDto) {
+        logger.info(patientDto.getPatient_id().toString());
+        logger.info(patientDto.getFirst_name());
+        try{
+            patientService.updatePatient(patientDto.getPatient_id(), patientDto);
+        }catch(Exception e){
+            return "redirect:/patients?update_failure";
+        }
+        
+
+        return "redirect:/patients?update_success";
     }
 }
