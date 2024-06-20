@@ -22,6 +22,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -75,12 +76,14 @@ public class PatientController {
         return "redirect:/patients?delete_success";
     }
 
-    @PostMapping("patients/update")
-    public String updatepatient(@ModelAttribute("editPatient") PatientDto patientDto) {
-        logger.info(patientDto.getPatient_id().toString());
-        logger.info(patientDto.getFirst_name());
+    @PostMapping("/patients/update/{id}")
+    public String updatepatient(@Valid @ModelAttribute("editPatient") PatientDto patientDto, 
+                                @PathVariable("id") Long patientId) {
+
+        logger.info("Updating patient with id:" + patientId);
+        
         try{
-            patientService.updatePatient(patientDto.getPatient_id(), patientDto);
+            patientService.updatePatient(patientId, patientDto);
         }catch(Exception e){
             return "redirect:/patients?update_failure";
         }

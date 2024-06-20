@@ -145,7 +145,11 @@
                             </div>
 
                             <div class="modal-body p-4">
-                                <form id="updatePatientForm" th:action = "@{/patients/update}"  th:object = "${editPatient}" method="post">
+                                <form id="updatePatientForm" onsubmit="submitEditForm(event)"  th:object = "${editPatient}" method="post">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <div class="form-group mb-3">
+                                      <label class="form-label">Patient ID: <span id="patientIdSpan"></span></label> 
+                                    </div>
                                     <div class="form-group mb-3">
                                         <label class="form-label">First Name</label>
                                         <input th:field="*{first_name}" type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter First Name" required/>
@@ -196,7 +200,7 @@
                                     
                                     <div class="form-group">
                 
-                                        <button type="submit" id="submit" class="btn btn-primary">Update Patient</button>
+                                        <button type="submit" id="submitButton" class="btn btn-primary">Update Patient</button>
                                     </div>
                                 </form>
                             </div>
@@ -277,19 +281,35 @@
         fetch('/patients/' + patientId)
             .then(response => response.json())
             .then(data => {
-                document.getElementById('updatePatientForm').elements['first_name'].value = data.first_name;
-                document.getElementById('updatePatientForm').elements['last_name'].value = data.last_name;
-                document.getElementById('updatePatientForm').elements['birth_date'].value = data.birth_date; 
-                document.getElementById('updatePatientForm').elements['sex'].value = data.sex;
-                document.getElementById('updatePatientForm').elements['phone'].value = data.phone;
-                document.getElementById('updatePatientForm').elements['email'].value = data.email;
-                document.getElementById('updatePatientForm').elements['insurance_info'].value = data.insurance_info;
+                const form = document.getElementById('updatePatientForm');
+                form.elements['first_name'].value = data.first_name;
+                form.elements['last_name'].value = data.last_name;
+                form.elements['birth_date'].value = data.birth_date; 
+                form.elements['sex'].value = data.sex;
+                form.elements['phone'].value = data.phone;
+                form.elements['email'].value = data.email;
+                form.elements['insurance_info'].value = data.insurance_info;
+
+                document.getElementById('patientIdSpan').textContent = `${patientId}`;
+                form.setAttribute('data-patient-id', patientId);
 
 
                 $('#updatePatientModal').modal('show');
             })
             .catch(error => console.error('Error', error));
         }
+
+    function submitEditForm(event){
+        event.preventDefault();
+        const form = document.getElementById('updatePatientForm');
+        const patientIdSpan = document.getElementById('patientIdSpan');
+        const patientId = patientIdSpan.textContent.trim();
+
+        // Set form action attribute dynamically
+        form.setAttribute('action', `/patients/update/${patientId}`);
+
+        form.submit();
+    }
     
 </script>
 

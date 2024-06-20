@@ -3,9 +3,12 @@ package io.nichan.hms.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import io.nichan.exception.ResourceNotFoundException;
+import io.nichan.hms.controller.PatientController;
 import io.nichan.hms.dto.PatientDto;
 import io.nichan.hms.entity.Patient;
 import io.nichan.hms.entity.User;
@@ -16,6 +19,7 @@ import io.nichan.hms.service.PatientService;
 @Service
 public class PatientServiceImpl implements PatientService{
 
+    private static final Logger logger = LoggerFactory.getLogger(PatientController.class);
     private PatientRepository patientRepository;
 
     public PatientServiceImpl(PatientRepository patientRepository){
@@ -45,7 +49,6 @@ public class PatientServiceImpl implements PatientService{
         Patient patient = patientRepository.findById(patientId).orElseThrow(
             () -> new ResourceNotFoundException("Patient does not exist with the given ID:" + patientId)
         );
-
         patient.setFirst_name(updatedPatient.getFirst_name());
         patient.setLast_name(updatedPatient.getLast_name());
         patient.setBirth_date(updatedPatient.getBirth_date());
