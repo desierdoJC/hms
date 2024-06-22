@@ -26,6 +26,6 @@
 
 # FRONTEND
 ## -Design frontend
-## -Index page
+## -<del>Index page</del> Improve index page
 ## -Header and Footer
 ## -Create Logo
