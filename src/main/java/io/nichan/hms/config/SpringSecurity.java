@@ -30,8 +30,7 @@ public class SpringSecurity {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf(Customizer.withDefaults()).authorizeHttpRequests((authorize) -> 
-            authorize.requestMatchers("/register/**").permitAll()
-                .requestMatchers("/index").permitAll()
+            authorize.requestMatchers("/register/**", "/index" , "/").permitAll()
                 .requestMatchers("/users").hasRole("ADMIN")
                 .requestMatchers("/patients/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN"))

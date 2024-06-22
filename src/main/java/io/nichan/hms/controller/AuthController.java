@@ -29,7 +29,7 @@ public class AuthController {
     }
 
     //method to handle /index page request
-    @GetMapping("/index")
+    @GetMapping({"/", "/index"})
     public String home(){
         return "index";
     }
