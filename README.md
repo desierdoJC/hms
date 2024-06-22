@@ -23,3 +23,6 @@
 # DOCTORS 
 ##   -Backend for doctors
 ##    -Frontend
+
+# FRONTEND
+## -Design frontend
