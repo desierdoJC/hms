@@ -26,3 +26,5 @@
 
 # FRONTEND
 ## -Design frontend
+## -Index page
+## -Header and Footer
