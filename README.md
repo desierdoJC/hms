@@ -28,3 +28,4 @@
 ## -Design frontend
 ## -Index page
 ## -Header and Footer
+## -Create Logo
