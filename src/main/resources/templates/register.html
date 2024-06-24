@@ -8,20 +8,46 @@
     rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
     crossorigin="anonymous">
+    <link href="../static/css/styles.css" th:href="@{css/styles.css}"rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="nav-custom navbar navbar-expand-lg navbar-light bg-light mb-5 p-2">
+        <div class="container-fluid">
         <a class="navbar-brand" href="#">HMS</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <!-- left -->
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/login}">Login</a>
+                  <a class="nav-link active text-primary" aria-current="page" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle text-primary" th:href="@{/}"  id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page">Services</a>
+                  <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                    <li><a class="dropdown-item" th:href="@{/}">Service 1</a></li>
+                    <li><a class="dropdown-item" th:href="@{/}">Service 2</a></li>
+                    <li><a class="dropdown-item" th:href="@{/}">Service 3</a></li>
+                  </ul>
+                </li>
+                 <li class="nav-item">
+                  <a class="nav-link text-primary" aria-current="page" th:href="@{/}">Blog</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-primary" aria-current="page" th:href="@{/}">Contact Us</a>
                 </li>
             </ul>
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <!-- right -->
+                
+                <li class="nav-item">
+                  <button type="button" class="btn btn-outline-primary btn-sm"><a class="nav-link active text-primary text-dark" aria-current="page" th:href="@{/login}">Login</a> </button>
+                </li>
+                
+            </ul>
         </div>
+    </div>
     </nav>
     <div class="container">
         <div class="row col-md-8 offset-md-2">

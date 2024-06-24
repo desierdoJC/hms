@@ -9,12 +9,13 @@
         rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
         crossorigin="anonymous">
+        <link href="../static/css/styles.css" th:href="@{css/styles.css}"rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="nav-custom navbar navbar-expand-lg navbar-light bg-light mb-5 p-2">
             <div class="container-fluid">
             <a class="navbar-brand" href="#">HMS</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,6 +24,23 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <!-- left -->
+                    <li class="nav-item">
+                      <a class="nav-link active text-primary" aria-current="page" th:href="@{/}">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle text-primary" th:href="@{/}"  id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page">Services</a>
+                      <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                        <li><a class="dropdown-item" th:href="@{/}">Service 1</a></li>
+                        <li><a class="dropdown-item" th:href="@{/}">Service 2</a></li>
+                        <li><a class="dropdown-item" th:href="@{/}">Service 3</a></li>
+                      </ul>
+                    </li>
+                     <li class="nav-item">
+                      <a class="nav-link text-primary" aria-current="page" th:href="@{/}">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link text-primary" aria-current="page" th:href="@{/}">Contact Us</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <!-- right -->
@@ -106,7 +124,7 @@
                                     </div>
                                     <div class="form-group mb-3">
                                         <label class="form-label">Phone Number</label>
-                                        <input th:field="*{phone}" type="tel" pattern="^(09|\+639)\d{9}$" class="form-control" name="phone" id="phone" placeholder="+63-xxxxxxxxxx/09xxxxxxxxxx"/>
+                                        <input th:field="*{phone}" type="tel" pattern="^(09|\+639)\d{9}$" class="form-control" name="phone" id="phone" placeholder="+639XXXXXXXXX" maxlength="13"/>
                                         <p th:errors = "*{birth_date}" class="text-danger"
                                         th:if="${#fields.hasErrors('phone')}"></p>
                                     </div>
@@ -181,7 +199,7 @@
                                     </div>
                                     <div class="form-group mb-3">
                                         <label class="form-label">Phone Number</label>
-                                        <input th:field="*{phone}" type="tel" pattern="^(09|\+639)\d{9}$" class="form-control" name="phone" id="phone" placeholder="+63-xxxxxxxxxx/09xxxxxxxxxx"/>
+                                        <input th:field="*{phone}" type="tel" pattern="^(09|\+639)\d{9}$" class="form-control" name="phone" id="phone" placeholder="+639XXXXXXXXX" maxlength="13"/>
                                         <p th:errors = "*{phone}" class="text-danger"
                                         th:if="${#fields.hasErrors('phone')}"></p>
                                     </div>
@@ -256,7 +274,7 @@
     </body>
 
 <script th:inline="javascript">
-    let token = document.querySelector("meta[name='_csrf']").content;
+
     function deletePatient(patientId){
         if(confirm('Are you sure you want to delete this patient?')){
             fetch('/patients/delete/' + patientId, {
@@ -310,14 +328,10 @@
 
         form.submit();
     }
+
+    
     
 </script>
 
-<style>
-    .form-group .form-label:after{
-    content:"*";
-    color:red;
-}
-</style>
 
    

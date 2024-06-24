@@ -1,6 +1,7 @@
 package io.nichan.hms.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -33,7 +34,8 @@ public class SpringSecurity {
             authorize.requestMatchers("/register/**", "/index" , "/").permitAll()
                 .requestMatchers("/users").hasRole("ADMIN")
                 .requestMatchers("/patients/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN"))
+                .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll())
         .formLogin(
             form -> form
                 .loginPage("/login")

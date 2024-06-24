@@ -8,12 +8,13 @@
     rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
     crossorigin="anonymous">
+    <link href="../static/css/styles.css" th:href="@{css/styles.css}" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5 p-2">
+    <nav class="nav-custom navbar navbar-expand-lg navbar-light bg-light mb-5 p-2">
         <div class="container-fluid">
         <a class="navbar-brand" href="#">HMS</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +45,7 @@
                 <!-- right -->
                 
                 <li class="nav-item">
-                  <button type="button" class="btn btn-outline-primary btn-sm"><a class="nav-link active text-primary" aria-current="page" th:href="@{/login}">Login</a> </button>
+                  <button type="button" class="btn btn-outline-primary btn-sm"><a class="nav-link active text-primary text-dark" aria-current="page" th:href="@{/login}">Login</a> </button>
                 </li>
                 
             </ul>
@@ -54,9 +55,9 @@
 <div class="container">
   <div class="row">
     <div class ="col p-3">
-      <h1>Your health is our priority.</h1>
+      <h1>Your <div class="index-tagline">health</div> is our priority.</h1>
       <h3 class="pb-3">Lorem Ipsum</h3>
-      <button type="button" class="btn btn-primary"><a th:href="@{/}">View Services</a></button>
+      <button type="button" class="btn btn-outline-primary"><a th:href="@{/}" class="text-dark">View Services</a></button>
     </div>
     <div class ="col">
       <img src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" class="img-fluid" alt="..."></img>

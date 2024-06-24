@@ -1,0 +1,12 @@
+.index-tagline{
+    color:red;
+}
+
+.nav-custom{
+    box-shadow: 0 4px 2px -2px rgba(0,0,0,0.1);
+}
+
+.form-group .form-label:after{
+    content:"*";
+    color:red;
+}
