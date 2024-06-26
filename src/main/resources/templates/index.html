@@ -43,8 +43,13 @@
             </ul>
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <!-- right -->
-                
-                <li class="nav-item">
+                <li class="nav-item" th:if="${currentUser != null}">
+                  <span class="nav-link" th:text = "${currentUser.firstName}"></span>
+                </li>
+                <li class="nav-item" th:if="${currentUser != null}">
+                  <button type="button" class="btn btn-outline-primary btn-sm"><a class="nav-link active text-primary text-dark" aria-current="page" th:href="@{/users}">Users</a> </button>
+                </li>
+                <li class="nav-item" th:unless="${currentUser != null}">
                   <button type="button" class="btn btn-outline-primary btn-sm"><a class="nav-link active text-primary text-dark" aria-current="page" th:href="@{/login}">Login</a> </button>
                 </li>
                 

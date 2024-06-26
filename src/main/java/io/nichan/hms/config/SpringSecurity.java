@@ -34,6 +34,7 @@ public class SpringSecurity {
             authorize.requestMatchers("/register/**", "/index" , "/").permitAll()
                 .requestMatchers("/users").hasRole("ADMIN")
                 .requestMatchers("/patients/**").hasRole("ADMIN")
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll())
         .formLogin(
