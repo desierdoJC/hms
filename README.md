@@ -11,7 +11,8 @@
 ## - add address backend
 
 # ADMIN DASHBOARD
-##   -Create dashboard for all admin controls(users,patients,appointments,doctors,etc)
+##   - <del>Create dashboard for all admin controls(users,patients,appointments,doctors,etc) </del>
+##   - Add links for dashboard and make it span to the bottom
 
 # GIT
 ##   <del> -Create repository in github </del>
