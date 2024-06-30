@@ -54,15 +54,69 @@
             </div>
         </div>
         </nav>
-        <div class ="container">
+
+<div class="container-fluid d-flex">
+        <!-- Admin Dashboard -->
+        <div class="dashboard d-flex flex-column flex-shrink-0 p-3 bg-light">
+            <a th:href="@{/}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                <span class="fs-4">Admin Dashboard</span>
+            </a>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a th:href="@{/users}" class="nav-link link-dark" aria-current="page">
+                        <!--<svg>
+        
+                        </svg> -->
+                        Users
+                    </a>
+                    
+                </li>
+                <li>
+                    <a th:href="@{/}" class="nav-link link-dark" aria-current="page">
+                        <!--<svg>
+        
+                        </svg> -->
+                        Appointments
+                    </a>
+                    
+                </li>
+                <li>
+                    <a th:href="@{/patients}" class="nav-link active" aria-current="page">
+                       <!--<svg>
+        
+                        </svg> -->
+                        Patients
+                    </a>
+                    
+                </li>
+                <li>
+                    <a th:href="@{/}" class="nav-link link-dark" aria-current="page">
+                       <!--<svg>
+        
+                        </svg> -->
+                        Doctors
+                    </a>
+                    
+                </li>
+            </ul>
+        </div>
+
+        
+        <div class ="container flex-grow-1">
             <div class="row col-md-10">
-                <h1>Patient List</h1>
+                <span class="fs-3">Patient List</span>
             </div>
             <div th:if="${param.success}">
                 <div class="alert alert-success">
                     Successfully added Patient!
                 </div>
             </div>
+            <div th:if="${param.update_success}">
+                <div class="alert alert-success">
+                    Successfully updated Patient!
+                </div>
+            </div>  
             <div th:if="${param.delete_success}">
                 <div class="alert alert-success">
                     Successfully deleted Patient!
@@ -77,7 +131,13 @@
                 <div class="alert alert-danger">
                     Duplicate Patient!
                 </div>
-            </div>     
+            </div>
+            <div th:if="${param.update_failure}">
+                <div class="alert alert-danger">
+                    Failed to update Patient!
+                </div>
+            </div>
+               
                 <!-- Button trigger for add patient modal-->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPatientModal">Add Patient</button>
 
@@ -94,25 +154,25 @@
                             <div class="modal-body p-4">
                                 <form th:action = "@{/patients/save}" th:object="${addPatient}" method="post">
                                     <div class="form-group mb-3">
-                                        <label class="form-label">First Name</label>
+                                        <label class="label-required form-label">First Name</label>
                                         <input th:field="*{first_name}" type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter First Name" required/>
                                         <p th:errors = "*{first_name}" class="text-danger"
                                         th:if="${#fields.hasErrors('first_name')}"></p>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label class="form-label">Last Name</label>
+                                        <label class="label-required form-label">Last Name</label>
                                         <input th:field="*{last_name}" type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter Last Name" required/>
                                         <p th:errors = "*{last_name}" class="text-danger"
                                         th:if="${#fields.hasErrors('last_name')}"></p>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label class="form-label">Birth Date</label>
+                                        <label class="label-required form-label">Birth Date</label>
                                         <input th:field="*{birth_date}" type="date" class="form-control" name="birth_date" id="birth_date" required/>
                                         <p th:errors = "*{birth_date}" class="text-danger"
                                         th:if="${#fields.hasErrors('birth_date')}"></p>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label class="form-label">Sex</label>
+                                        <label class="label-required form-label">Sex</label>
                                         <select th:field="*{sex}" class="form-control" name="sex" id="sex" required>
                                                 <option value="male">Male</option>
                                                 <option value="female">Female</option>
@@ -123,26 +183,31 @@
                                         th:if="${#fields.hasErrors('sex')}"></p>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label class="form-label">Phone Number</label>
+                                        <label class="label-required form-label">Phone Number</label>
                                         <input th:field="*{phone}" type="tel" pattern="^(09|\+639)\d{9}$" class="form-control" name="phone" id="phone" placeholder="+639XXXXXXXXX" maxlength="13"/>
                                         <p th:errors = "*{birth_date}" class="text-danger"
                                         th:if="${#fields.hasErrors('phone')}"></p>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label class="form-label">Email Address</label>
+                                        <label class="label-required form-label">Email Address</label>
                                         <input th:field="*{email}" type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter Email" required/>
                                         <p th:errors = "*{email}" class="text-danger"
                                         th:if="${#fields.hasErrors('email')}"></p>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label class="form-label">Insurance Info</label>
+                                        <label class="label-required form-label">Insurance Info</label>
                                         <input th:field="*{insurance_info}" type="text" class="form-control" name="insurance_info" id="insurance_info" placeholder="Insurance Info" required/>
                                         <p th:errors = "*{insurance_info}" class="text-danger"
                                         th:if="${#fields.hasErrors('insurance_info')}"></p>
                                     </div>
+                                    <div class="form-group mb-3">
+                                        <label class="label-required form-label">Age</label>
+                                        <input th:field="*{age}" type="number" class="form-control" name="age" id="age" placeholder="Age" required/>
+                                        <p th:errors = "*{age}" class="text-danger"
+                                        th:if="${#fields.hasErrors('age')}"></p>
+                                    </div>
                                     
                                     <div class="form-group">
-                
                                         <button type="submit" id="submit" class="btn btn-primary">Add Patient</button>
                                     </div>
                                 </form>
@@ -169,25 +234,25 @@
                                       <label class="form-label">Patient ID: <span id="patientIdSpan"></span></label> 
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label class="form-label">First Name</label>
+                                        <label class="label-required form-label">First Name</label>
                                         <input th:field="*{first_name}" type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter First Name" required/>
                                         <p th:errors = "*{first_name}" class="text-danger"
                                         th:if="${#fields.hasErrors('first_name')}"></p>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label class="form-label">Last Name</label>
+                                        <label class="label-required form-label">Last Name</label>
                                         <input th:field="*{last_name}" type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter Last Name" required/>
                                         <p th:errors = "*{last_name}" class="text-danger"
                                         th:if="${#fields.hasErrors('last_name')}"></p>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label class="form-label">Birth Date</label>
+                                        <label class="label-required form-label">Birth Date</label>
                                         <input th:field="*{birth_date}" type="date" class="form-control" name="birth_date" id="birth_date" required/>
                                         <p th:errors = "*{birth_date}" class="text-danger"
                                         th:if="${#fields.hasErrors('birth_date')}"></p>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label class="form-label">Sex</label>
+                                        <label class="label-required form-label">Sex</label>
                                         <select th:field="*{sex}" class="form-control" name="sex" id="sex" required>
                                                 <option value="male">Male</option>
                                                 <option value="female">Female</option>
@@ -198,26 +263,31 @@
                                         th:if="${#fields.hasErrors('sex')}"></p>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label class="form-label">Phone Number</label>
+                                        <label class="label-required form-label">Phone Number</label>
                                         <input th:field="*{phone}" type="tel" pattern="^(09|\+639)\d{9}$" class="form-control" name="phone" id="phone" placeholder="+639XXXXXXXXX" maxlength="13"/>
                                         <p th:errors = "*{phone}" class="text-danger"
                                         th:if="${#fields.hasErrors('phone')}"></p>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label class="form-label">Email Address</label>
+                                        <label class="label-required form-label">Email Address</label>
                                         <input th:field="*{email}" type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter Email" required/>
                                         <p th:errors = "*{email}" class="text-danger"
                                         th:if="${#fields.hasErrors('email')}"></p>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label class="form-label">Insurance Info</label>
+                                        <label class="label-required form-label">Insurance Info</label>
                                         <input th:field="*{insurance_info}" type="text" class="form-control" name="insurance_info" id="insurance_info" placeholder="Insurance Info" required/>
                                         <p th:errors = "*{insurance_info}" class="text-danger"
                                         th:if="${#fields.hasErrors('insurance_info')}"></p>
                                     </div>
+                                    <div class="form-group mb-3">
+                                        <label class="label-required form-label">Age</label>
+                                        <input th:field="*{age}" type="number" class="form-control" name="age" id="age" placeholder="Age" required/>
+                                        <p th:errors = "*{age}" class="text-danger"
+                                        th:if="${#fields.hasErrors('age')}"></p>
+                                    </div>
                                     
                                     <div class="form-group">
-                
                                         <button type="submit" id="submitButton" class="btn btn-primary">Update Patient</button>
                                     </div>
                                 </form>
@@ -227,6 +297,7 @@
                     </div>
                  </div>
  
+            <!-- Patients Table -->
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -238,6 +309,7 @@
                         <th>Phone</th>
                         <th>Email</th>
                         <th>Insurance Info</th>
+                        <th>Age</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -251,6 +323,7 @@
                         <td th:text = "${patient.phone}"></td>
                         <td th:text = "${patient.email}"></td>
                         <td th:text = "${patient.insurance_info}"></td>
+                        <td th:text = "${patient.age}"></td>
                         <td>
 
                             <button className='btn btn-info' th:onclick="'updatePatient('+ ${patient.patient_id} + ');'">
@@ -271,7 +344,9 @@
                 </tbody>
             </table>
         </div>
+</div>
     </body>
+
 
 <script th:inline="javascript">
 
@@ -307,6 +382,7 @@
                 form.elements['phone'].value = data.phone;
                 form.elements['email'].value = data.email;
                 form.elements['insurance_info'].value = data.insurance_info;
+                form.elements['age'].value = data.age;
 
                 document.getElementById('patientIdSpan').textContent = `${patientId}`;
                 form.setAttribute('data-patient-id', patientId);

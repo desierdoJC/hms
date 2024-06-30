@@ -13,7 +13,8 @@ public class PatientMapper {
             patient.getSex(),
             patient.getPhone(),
             patient.getEmail(),
-            patient.getInsurance_info()
+            patient.getInsurance_info(),
+            patient.getAge()
         );
         
     }
@@ -27,7 +28,8 @@ public class PatientMapper {
             patientDto.getSex(),
             patientDto.getPhone(),
             patientDto.getEmail(),
-            patientDto.getInsurance_info()
+            patientDto.getInsurance_info(),
+            patientDto.getAge()
         );
         
     }

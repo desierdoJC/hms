@@ -1,6 +1,7 @@
 package io.nichan.hms.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,8 @@ public class PatientDto {
     private String email;
     @NotEmpty(message = "Insurance info should not be empty")
     private String insurance_info;
+    @NotNull(message = "Age should not be empty")
+    private int age;
 
 
 }
