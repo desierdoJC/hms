@@ -5,7 +5,7 @@
 ##  <del>-Delete Patient </del> - Replace confirm with modal to confirm deletion
 ##    <del>-Add format for phone number in frontend (2 fields)  - limit input by user based on format </del> -dynamic maxinput based on user input (JS)
 ##    <del>-Add red * for all required fields - Fix linking stylesheets </del>
-##  -Add Age column
+##  <del> -Add Age column </del>
 
 # ADDRESS
 ## - add address backend
