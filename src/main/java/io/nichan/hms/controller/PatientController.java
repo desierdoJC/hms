@@ -15,15 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.nichan.hms.dto.PatientDto;
-import io.nichan.hms.dto.UserDto;
 import io.nichan.hms.entity.Patient;
 import io.nichan.hms.service.PatientService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @AllArgsConstructor

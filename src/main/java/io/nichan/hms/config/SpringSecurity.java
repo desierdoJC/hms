@@ -35,6 +35,7 @@ public class SpringSecurity {
                 .requestMatchers("/users").hasRole("ADMIN")
                 .requestMatchers("/patients/**").hasRole("ADMIN")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/doctors/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll())
         .formLogin(
