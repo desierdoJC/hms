@@ -1,5 +1,11 @@
 package io.nichan.hms.service;
 
-public interface DoctorService {
+import java.util.List;
 
+import io.nichan.hms.dto.DoctorDto;
+
+public interface DoctorService {
+    void createDoctor(DoctorDto doctorDto);
+
+    List<DoctorDto> findAllDoctors();
 }
